@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>QR Code Loader and Presenter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #reader {
+            width: 300px;
+            height: 300px;
+        }
+
+        #presentation-container {
+            position: relative;
+        }
+
+        .slide {
+            position: relative;
+        }
+    </style>
+    <script src="https://github.com/mebjas/html5-qrcode/releases/download/v2.3.8/html5-qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.0.3/pako.min.js"></script>
+</head>
+
+<body>
+    <button id="startScan">Scan QR Code</button>
+    <button id="stop">Stop Scanning</button>
+    <div id="reader"></div>
+    <div id="presentation-container">
+        <!-- The presentation content will be dynamically added here -->
+    </div>
+
+    <script>
+        const html5QrCode = new Html5Qrcode("reader");
+
+        document.getElementById('stop').addEventListener('click', function () {
+            html5QrCode.stop().catch(err => console.error(`Failed to stop scanning`, err));
+        });
+
+        document.getElementById('startScan').addEventListener('click', function () {
+            const cameraConstraints = {
+                facingMode: "environment",
+                width: { min: 100, ideal: 200, max: 500 },
+            };
+
+            html5QrCode.start(
+                { facingMode: "environment" }, // Prefer rear camera, if available
+                cameraConstraints,
+                qrCodeMessage => {
+                    // Handle decoded QR code message
+                    console.log(`QR Code detected: ${qrCodeMessage}`);
+
+                    // Decode the Base64 string
+                    let decoded = atob(qrCodeMessage);
+                    // Convert the decoded string to a Uint8Array
+                    let bytes = new Uint8Array(decoded.length);
+                    for (let i = 0; i < decoded.length; i++) {
+                        bytes[i] = decoded.charCodeAt(i);
+                    }
+                    // Decompress the bytes
+                    let decompressed = pako.inflate(bytes, { to: 'string' });
+                    // Now you can use `decompressed` as the original data
+                    console.log(decompressed);
+                    // Parse the decompressed data as JSON
+                    let data;
+                    try {
+                        data = JSON.parse(decompressed);
+                    } catch (e) {
+                        console.error('Invalid JSON:', e);
+                        return;
+                    }
+
+                    const presentationContainer = document.getElementById('presentation-container');
+
+                    // Clear the previous presentation
+                    presentationContainer.innerHTML = '';
+
+                    // Iterate over the slides array and create HTML elements for each slide
+                    data.slides.forEach((slide, index) => {
+                        const slideElement = document.createElement('div');
+                        slideElement.classList.add('slide');
+
+                        if (slide.content) {
+                            const contentElement = document.createElement('p');
+                            contentElement.textContent = slide.content;
+                            slideElement.appendChild(contentElement);
+                        }
+
+                        if (slide.image) {
+                            const imageElement = document.createElement('img');
+                            imageElement.src = slide.image;
+                            imageElement.alt = slide.imageAlt;
+                            imageElement.style.position = 'absolute';
+                            imageElement.style.left = slide.left;
+                            imageElement.style.top = slide.top;
+                            imageElement.style.width = slide.imageWidth;
+                            imageElement.style.height = slide.imageHeight;
+                            slideElement.appendChild(imageElement);
+                        }
+
+                        presentationContainer.appendChild(slideElement);
+                    });
+
+                    // Stop the scanner
+                    html5QrCode.stop().catch(err => console.error(`Failed to stop scanning`, err));
+                },
+                errorMessage => {
+                    // Handle errors from QR code reader
+                    if (!errorMessage.includes('No MultiFormat Readers were able to detect the code')) {
+                        console.error(`QR Code error: ${errorMessage}`);
+                    }
+                })
+                .catch(err => {
+                    // Handle start errors
+                    console.error(`QR Code start error: ${err}`);
+                });
+        });
+    </script>
+</body>
+
+</html>
