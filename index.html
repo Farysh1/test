@@ -1,0 +1,58 @@
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.js"></script>
+<script nomodule src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script>
+
+<model-viewer class="fullscreen" src="assets/baroque_church_-_notre_dame_de_lassomption/scene.gltf" camera-controls
+    auto-rotate ar
+    ios-src="assets/baroque_church_-_notre_dame_de_lassomption/Baroque_church_-_Notre_Dame_de_lAssomption.usdz"></model-viewer>
+
+<div class="buttonsContainer">
+    <button id="prevButton">Previous Model</button>
+    <button id="nextButton">Next Model</button>
+</div>
+
+<style>
+    .fullscreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .buttonsContainer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    .buttonsContainer button {
+        margin: 10px;
+    }
+</style>
+
+<script>
+    let models = ['assets/baroque_church_-_notre_dame_de_lassomption/scene.gltf', 'assets/Santa Maria Madalena/Churche1.gltf', 'assets/church_of_saint_george_-_ragusa_sicily/scene.gltf', 'assets/biserica_evanghelica_din_teaca/scene.gltf', 'assets/Illinska church/scene.gltf']; // Replace with your actual model URLs
+    let iosModels = ['assets/baroque_church_-_notre_dame_de_lassomption/Baroque_church_-_Notre_Dame_de_lAssomption.usdz', 'assets/Santa Maria Madalena/Santa_Maria_Madalena.usdz', 'assets/church_of_saint_george_-_ragusa_sicily/Church_of_Saint_George_-_Ragusa_Sicily.usdz', 'assets/biserica_evanghelica_din_teaca/Biserica_evanghelică_din_Teaca.usdz', 'assets/Illinska church/Illinska_church_in_Subbotiv_-_beta.usdz']; // Replace with your actual iOS model URLs
+    let currentIndex = 0;
+
+    document.getElementById('prevButton').addEventListener('click', () => {
+        currentIndex--;
+        if (currentIndex < 0) {
+            currentIndex = models.length - 1;
+        }
+        let modelViewer = document.querySelector('model-viewer');
+        modelViewer.setAttribute('src', models[currentIndex]);
+        modelViewer.setAttribute('ios-src', iosModels[currentIndex]);
+    });
+
+    document.getElementById('nextButton').addEventListener('click', () => {
+        currentIndex++;
+        if (currentIndex >= models.length) {
+            currentIndex = 0;
+        }
+        let modelViewer = document.querySelector('model-viewer');
+        modelViewer.setAttribute('src', models[currentIndex]);
+        modelViewer.setAttribute('ios-src', iosModels[currentIndex]);
+    });
+</script>
