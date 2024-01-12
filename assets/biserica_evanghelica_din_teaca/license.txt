@@ -1,0 +1,11 @@
+Model Information:
+* title:	Biserica evanghelică din Teaca
+* source:	https://sketchfab.com/3d-models/biserica-evanghelica-din-teaca-07ea322ff22e4e62bcecce7025bb89a1
+* author:	Institutul Național al Patrimoniului (https://sketchfab.com/cimec)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Biserica evanghelică din Teaca" (https://sketchfab.com/3d-models/biserica-evanghelica-din-teaca-07ea322ff22e4e62bcecce7025bb89a1) by Institutul Național al Patrimoniului (https://sketchfab.com/cimec) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
