@@ -1,0 +1,11 @@
+Model Information:
+* title:	Illinska church in Subbotiv - beta
+* source:	https://sketchfab.com/3d-models/illinska-church-in-subbotiv-beta-61520cd5d8a342db833ae97faead8098
+* author:	Seeing through time (https://sketchfab.com/simon.radchenko)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Illinska church in Subbotiv - beta" (https://sketchfab.com/3d-models/illinska-church-in-subbotiv-beta-61520cd5d8a342db833ae97faead8098) by Seeing through time (https://sketchfab.com/simon.radchenko) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
